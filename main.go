@@ -13,17 +13,18 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
+	if len(os.Args) < 3 {
 		fmt.Fprintf(os.Stderr, "invalid arguments\n")
 		os.Exit(1)
 	}
 	namespace := os.Args[1]
-	jobID := os.Args[2]
+	orgID := os.Args[2]
+	jobID := os.Args[3]
 
 	stream := redis.NewStream(nil)
 	payloads, _, err := stream.GetLatest(
 		context.Background(),
-		fmt.Sprintf("%s:org.artificial.job.%s.program.0", namespace, jobID),
+		fmt.Sprintf("%s:org.%s.job.%s.program.0", namespace, orgID, jobID),
 	)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "cannot get latest\n")
