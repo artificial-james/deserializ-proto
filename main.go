@@ -38,7 +38,6 @@ func main() {
 			break
 		}
 	}
-
 	a := &pb.Graph{}
 
 	err = proto.Unmarshal([]byte(b), a)
@@ -50,4 +49,8 @@ func main() {
 	j := protojson.Format(a)
 
 	fmt.Println(j)
+
+	fmt.Fprintf(os.Stderr, "binary size: %d\n", len(b))
+	fmt.Fprintf(os.Stderr, "number of nodes: %d\n", len(a.Nodes))
+	fmt.Fprintf(os.Stderr, "number of edges: %d\n", len(a.Edges))
 }
